@@ -1,5 +1,6 @@
 #meni za menjanje boje zmije i menjanje vockica
 
+import random
 import pygame
 
 pygame.init()
@@ -14,7 +15,11 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
 
-snake = [(5, 10), (4, 10), (3, 10)]
+def random_food():
+    return(random.randrange(GRID_WIDTH), random.randrange(GRID_HEIGHT))
+
+snake = [(9, 10), (8, 10), (7, 10)]
+food = random_food()
 direction = (1, 0)
 move_timer = 0
 MOVE_DELAY = 18 
@@ -45,7 +50,11 @@ while running:
         dx, dy = direction
         new_head = (head_x + dx, head_y + dy)
         snake.insert(0, new_head)
-        snake.pop()
+        
+        if(new_head == food):
+            food = random_food()
+        else:
+            snake.pop()
             
     screen.fill(BG_COLOR)
     for x, y in snake:
@@ -56,6 +65,9 @@ while running:
     for y in range(0, HEIGHT, CELL_SIZE):
         pygame.draw.line(screen, (255, 255, 255), (0, y), (WIDTH, y))    
 
+    fx, fy = food
+    pygame.draw.rect(screen, (220, 50, 80), (fx*CELL_SIZE, fy*CELL_SIZE, CELL_SIZE-2, CELL_SIZE))
+    
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()
