@@ -33,8 +33,10 @@ def reset_game():
 
 snake, food, direction, score, game_over = reset_game()
 move_timer = 0
-MOVE_DELAY = 18 
+MOVE_DELAY = 20
 BG_COLOR = (120, 89, 150)
+
+last_score = 0
 
 running = True
 
@@ -69,6 +71,10 @@ while running:
             hit_self = new_head in snake[:-1]
             hit_wall = x < 0 or x >= GRID_WIDTH or y < 0 or y >= GRID_HEIGHT
             
+            if score % 5 == 0 and score != 0 and score != last_score:
+                MOVE_DELAY -= 2
+                last_score = score
+
             if hit_self or hit_wall:
                 game_over = True
             else:
