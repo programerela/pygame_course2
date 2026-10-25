@@ -86,8 +86,25 @@ while running:
                     snake.pop()
             
     screen.fill(BG_COLOR)
-    for x, y in snake:
-        pygame.draw.rect(screen, (50, 220, 80), (x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE))
+    for x, y in snake[1:]:
+        pygame.draw.rect(screen, (35, 180, 70), (x*CELL_SIZE+2, y*CELL_SIZE+2, CELL_SIZE-4, CELL_SIZE-4), border_radius=5)
+    
+    hx, hy = snake[0]
+    head_rect = pygame.Rect(hx*CELL_SIZE+1, hy*CELL_SIZE+1, CELL_SIZE-2, CELL_SIZE-2)
+    pygame.draw.rect(screen, (70, 235, 100), head_rect, border_radius=7)
+    
+    if direction == (1, 0):
+        pygame.draw.circle(screen, (0,0,0), (head_rect.right-8, head_rect.top+9), 3)
+        pygame.draw.circle(screen, (0,0,0), (head_rect.right-8, head_rect.bottom-9), 3)
+    elif direction == (-1, 0):
+        pygame.draw.circle(screen, (0,0,0), (head_rect.left+8, head_rect.top+9), 3)
+        pygame.draw.circle(screen, (0,0,0), (head_rect.left+8, head_rect.bottom-9), 3)
+    elif direction == (0, 1):
+        pygame.draw.circle(screen, (0,0,0), (head_rect.left+9, head_rect.bottom-8), 3)
+        pygame.draw.circle(screen, (0,0,0), (head_rect.right-9, head_rect.bottom-8), 3)
+    elif direction == (0, -1):
+        pygame.draw.circle(screen, (0,0,0), (head_rect.left+9, head_rect.top+8), 3)
+        pygame.draw.circle(screen, (0,0,0), (head_rect.right-9, head_rect.top+8), 3)
     
     for x in range(0, WIDTH, CELL_SIZE):
         pygame.draw.line(screen, (255, 255, 255), (x, 0), (x, HEIGHT))
@@ -95,7 +112,8 @@ while running:
         pygame.draw.line(screen, (255, 255, 255), (0, y), (WIDTH, y))    
 
     fx, fy = food
-    pygame.draw.rect(screen, (220, 50, 80), (fx*CELL_SIZE, fy*CELL_SIZE, CELL_SIZE, CELL_SIZE))
+    food_center = (fx * CELL_SIZE + CELL_SIZE // 2, fy * CELL_SIZE + CELL_SIZE // 2)
+    pygame.draw.circle(screen, (235, 65, 70), food_center, CELL_SIZE //2 -3)
     
     screen.blit(font.render(f"Score: {score}", True, (255, 255, 255)), (10, 10))
     
