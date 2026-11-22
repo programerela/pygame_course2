@@ -3,6 +3,14 @@ import pygame
 
 pygame.init()
 
+background_image = pygame.image.load("./assets/images/flappy_bg.png").convert()
+bird_image = pygame.image.load("./assets/images/bird.png").convert_alpha()
+pipe_top_image = pygame.image.load("./assets/images/pipe_top.png").convert_alpha()
+pipe_bottom_image = pygame.image.load("./assets/images/pipe_bottom.png").convert_alpha()
+
+background_image = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
+
+
 WIDTH = 500
 HEIGHT = 600
 
